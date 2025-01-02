@@ -301,6 +301,21 @@ function Body() {
         console.error("Erro ao enviar as informações:", error);
       }
     };
+    const startScrape = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/start-scraping", {
+          method: "POST",
+        });
+
+        //Verifica se a resposta foi bem-sucedida
+        if (!response.ok) {
+          throw new Error("Erro no envio de informações");
+        }
+        const data = await response.json();
+      } catch (error) {
+        console.error("Erro ao enviar as informações:", error);
+      }
+    };
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:5000/scrape");
@@ -316,6 +331,7 @@ function Body() {
       }
     };
     sendInfo();
+    startScrape();
     fetchData();
   };
 
