@@ -257,26 +257,26 @@ function Body() {
   const allSupermarkets = ["Comper", "Olho D' Água"];
   const [activeSupermarket, setActiveMarket] = useState("comper");
   const [categories, setCategories] = useState({
-    alimentacao_saudavel: false,
-    bebidas: false,
-    casa_e_lazer: false,
-    carnes: false,
-    congelados: false,
-    frios: false,
+    alimentacao_saudavel: true,
+    bebidas: true,
+    casa_e_lazer: true,
+    carnes: true,
+    congelados: true,
+    frios: true,
     higiene: true,
     hortifruti: true,
-    infantil: false,
-    limpeza: false,
-    matinais: false,
-    mercearia: false,
-    padaria: false,
-    pet_shop: false,
-    doces: false,
-    perfumaria: false,
-    outras_categorias: false,
+    infantil: true,
+    limpeza: true,
+    matinais: true,
+    mercearia: true,
+    padaria: true,
+    pet_shop: true,
+    doces: true,
+    perfumaria: true,
+    outras_categorias: true,
   });
 
-  useEffect(() => {
+  const handleClick = () => {
     const sendInfo = async () => {
       try {
         const information = [
@@ -317,7 +317,7 @@ function Body() {
     };
     sendInfo();
     fetchData();
-  }, [activeSupermarket]);
+  };
 
   return (
     <div className="bg-red-600 w-full h-full">
@@ -364,6 +364,12 @@ function Body() {
                 </>
               );
             })}
+
+            <Option
+              className={"bg-red-500"}
+              text={"Pesquisar"}
+              onClick={() => handleClick()}
+            ></Option>
           </div>
         </div>
         <div className="w-3/4 bg-blue-600 min-w-3/4"></div>
