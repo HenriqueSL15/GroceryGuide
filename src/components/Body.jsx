@@ -1,11 +1,13 @@
 import React, { useState, useEffect, act } from "react";
 import Option from "./Option.jsx";
+import RenderData from "./RenderData.jsx";
 
 function Body() {
   const websiteDefaultLinks = {
     comper: "https://www.comper.com.br/",
     olho_d_agua: "https:/www.superolhodagua.instabuy.com.br",
   };
+
   const links = [
     {
       comper: {
@@ -246,6 +248,8 @@ function Body() {
     },
   ];
 
+  const [displayInformation, setDisplayInformation] = useState({});
+
   const transformText = (key) => {
     return key
       .slice(0, 1)
@@ -312,33 +316,66 @@ function Body() {
           throw new Error("Erro no envio de informações");
         }
         const data = await response.json();
+
+        if (data.ok) {
+          console.log("Scraping iniciado e concluído com sucesso.");
+        } else {
+          console.error("Erro ao iniciar o scraping.");
+        }
       } catch (error) {
         console.error("Erro ao enviar as informações:", error);
       }
     };
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/scrape");
+        const response = await fetch("http://localhost:5000/data");
 
         // Verifique se a resposta é bem-sucedida
-        if (!response.ok) {
-          throw new Error("Erro na resposta da API");
+        if (response.ok) {
+          // Arquivo JSON existe, obter dados filtrados
+          const data = await response.json();
+          console.log(data);
+
+          // Obter apenas as categorias selecionadas pelo usuário
+          const selectedCategories = Object.keys(categories).filter(
+            (category) => categories[category]
+          );
+
+          setDisplayInformation(data);
+
+          const filteredData = selectedCategories.reduce((result, category) => {
+            // Verifica se a categoria existe e se contém itens (pelo menos um item no objeto)
+            console.log(result);
+            if (
+              data.hasOwnProperty(category) &&
+              Object.keys(data[category]).length > 0
+            ) {
+              result[category] = data[category];
+            }
+            return result;
+          }, {});
+
+          console.log(filteredData);
+          setDisplayInformation(filteredData);
+        } else {
+          sendInfo();
+          startScrape();
         }
-        const data = await response.json();
-        console.log(data); // Verifique o que está sendo retornado
       } catch (error) {
         console.error("Erro ao buscar os dados:", error);
       }
     };
-    sendInfo();
-    startScrape();
-    fetchData();
+    try {
+      fetchData();
+    } catch {
+      console.log("DEU ERRADO");
+    }
   };
 
   return (
-    <div className="bg-red-600 w-full h-full">
+    <div className="bg-white w-full h-full">
       <div className="flex">
-        <div className="w-1/4 bg-green-600 min-w-1/4 text-start p-3 min-h-96">
+        <div className="w-1/4 border-r-2 border-gray-400 rounded bg-white min-w-1/4 text-start p-3 min-h-96">
           <h2 className="mb-5 text-3xl font-semibold">Supermercado</h2>
           <div className="flex flex-col text-xl justify-start items-start gap-2">
             {allSupermarkets.map((value) => {
@@ -388,7 +425,9 @@ function Body() {
             ></Option>
           </div>
         </div>
-        <div className="w-3/4 bg-blue-600 min-w-3/4"></div>
+        <div className="w-3/4 bg-white min-w-3/4">
+          <RenderData data={displayInformation} />
+        </div>
       </div>
     </div>
   );
