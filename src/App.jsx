@@ -6,11 +6,11 @@ import Body from "./components/Body.jsx";
 
 function App() {
   return (
-    <>
+    <div className="p-16">
       <Header />
       <Body />
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -392,6 +392,7 @@ function Body() {
                       )
                     }
                     text={value}
+                    activeSupermarket={activeSupermarket}
                   ></Option>
                 </>
               );
@@ -413,16 +414,13 @@ function Body() {
                       }));
                     }}
                     isActive={categories[key]} // Mando a atualização do estado para o componente Option(para alteração do estilo)
+                    activeSupermarket={""}
                   ></Option>
                 </>
               );
             })}
 
-            <Option
-              className={"bg-red-500"}
-              text={"Pesquisar"}
-              onClick={() => handleClick()}
-            ></Option>
+            <Option text={"Pesquisar"} onClick={() => handleClick()}></Option>
           </div>
         </div>
         <div className="w-3/4 bg-white min-w-3/4">
