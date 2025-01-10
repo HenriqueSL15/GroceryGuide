@@ -13,7 +13,7 @@ function Body() {
       comper: {
         alimentacao_saudavel: "https://www.comper.com.br/alimentacao-saudavel",
         bebidas: "https://www.comper.com.br/bebidas",
-        casa_e_lazer: "",
+        casa_e_lazer: "https://www.comper.com.br/casa-e-lazer",
         carnes: "https://www.comper.com.br/carnes-aves-e-peixes",
         congelados: "https://www.comper.com.br/congelados",
         frios: "https://www.comper.com.br/frios-e-laticinios",
@@ -261,23 +261,23 @@ function Body() {
   const allSupermarkets = ["Comper", "Olho D' Água"];
   const [activeSupermarket, setActiveMarket] = useState("comper");
   const [categories, setCategories] = useState({
-    alimentacao_saudavel: true,
+    alimentacao_saudavel: false,
     bebidas: true,
-    casa_e_lazer: true,
-    carnes: true,
-    congelados: true,
-    frios: true,
-    higiene: true,
-    hortifruti: true,
-    infantil: true,
-    limpeza: true,
-    matinais: true,
-    mercearia: true,
-    padaria: true,
-    pet_shop: true,
-    doces: true,
-    perfumaria: true,
-    outras_categorias: true,
+    casa_e_lazer: false,
+    carnes: false,
+    congelados: false,
+    frios: false,
+    higiene: false,
+    hortifruti: false,
+    infantil: false,
+    limpeza: false,
+    matinais: false,
+    mercearia: false,
+    padaria: false,
+    pet_shop: false,
+    doces: false,
+    perfumaria: false,
+    outras_categorias: false,
   });
 
   const handleClick = () => {
@@ -288,6 +288,7 @@ function Body() {
           links[0][activeSupermarket],
           categories,
         ];
+        console.log("Informação", information);
         const response = await fetch("http://localhost:5000/info", {
           method: "POST",
           headers: {
@@ -340,6 +341,7 @@ function Body() {
           const selectedCategories = Object.keys(categories).filter(
             (category) => categories[category]
           );
+          console.log(selectedCategories);
 
           setDisplayInformation(data);
 
@@ -358,7 +360,7 @@ function Body() {
           console.log(filteredData);
           setDisplayInformation(filteredData);
         } else {
-          sendInfo();
+          await sendInfo();
           startScrape();
         }
       } catch (error) {
