@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RenderData = ({ data, itemsPerPage = 1 }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // Estado para armazenar a página atual
   const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar a pesquisa
+  const [lowestPrice, setLowestPrice] = useState(true);
 
+  //Verifica se existe data para ser utilizada
   if (!data || typeof data !== "object") {
     return <div>No data available</div>;
   }
@@ -15,7 +17,7 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
   // Filtra categorias e itens com base no nome
   const filterItems = (data) => {
     // Filtra as categorias e dentro de cada categoria filtra os itens com base no nome
-    return Object.keys(data)
+    let filteredData = Object.keys(data)
       .map((categoryKey) => {
         const filteredItems = Object.keys(data[categoryKey]).filter((itemKey) =>
           data[categoryKey][itemKey].title
@@ -29,6 +31,20 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
         };
       })
       .filter((category) => category.items.length > 0); // Remove categorias que não tem itens filtrados
+
+    if (lowestPrice) {
+      filteredData = filteredData.map((category) => ({
+        ...category,
+        items: category.items.sort((a, b) => parsePrice(a) - parsePrice(b)),
+      }));
+    }
+
+    return filteredData;
+  };
+
+  const parsePrice = (priceString) => {
+    const newString = priceString.price;
+    return Number(newString.replace("R$", "").replace(",", "."));
   };
 
   const totalPages = Math.ceil(filterItems(data).length / itemsPerPage);
@@ -54,14 +70,26 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
   return (
     <div className="flex flex-col justify-center items-center">
       {/* Campo de busca */}
-      <input
-        type="text"
-        placeholder="Digite o nome do produto"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)} // Atualiza o valor da pesquisa
-        className="mb-4 p-2 w-1/2 border border-gray-300 rounded"
-      />
-
+      <div className="flex justify-around items-center w-full ">
+        <div className="flex justify-center items-center gap-3">
+          <input
+            type="checkbox"
+            checked={lowestPrice}
+            onClick={() => setLowestPrice(!lowestPrice)}
+            className="w-5 h-5"
+          />
+          <label htmlFor="lowestPrice" className="text-lg">
+            Menor preço
+          </label>
+        </div>
+        <input
+          type="text"
+          placeholder="Digite o nome do produto"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Atualiza o valor da pesquisa
+          className="mb-4 p-2 w-1/2 border border-gray-300 rounded"
+        />
+      </div>
       {/* Exibe produtos filtrados */}
       {paginatedCategories.map((category) => (
         <div key={category.category} className="text-center">

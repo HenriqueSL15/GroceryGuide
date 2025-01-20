@@ -306,6 +306,7 @@ function Body() {
         console.error("Erro ao enviar as informações:", error);
       }
     };
+
     const startScrape = async () => {
       try {
         const response = await fetch("http://localhost:5000/start-scraping", {
