@@ -260,25 +260,30 @@ function Body() {
 
   const allSupermarkets = ["Comper", "Olho D' Água"];
   const [activeSupermarket, setActiveMarket] = useState("comper");
-  const [categories, setCategories] = useState({
-    alimentacao_saudavel: false,
-    bebidas: true,
-    casa_e_lazer: false,
-    carnes: false,
-    congelados: false,
-    frios: false,
-    higiene: false,
-    hortifruti: false,
-    infantil: false,
-    limpeza: false,
-    matinais: false,
-    mercearia: false,
-    padaria: false,
-    pet_shop: false,
-    doces: false,
-    perfumaria: false,
-    outras_categorias: false,
-  });
+  const [activeCategory, setActiveCategory] = useState("alimentacao_saudavel");
+  const categories = [
+    "alimentacao_saudavel",
+    "bebidas",
+    "casa_e_lazer",
+    "carnes",
+    "congelados",
+    "frios",
+    "higiene",
+    "hortifruti",
+    "infantil",
+    "limpeza",
+    "matinais",
+    "mercearia",
+    "padaria",
+    "pet_shop",
+    "doces",
+    "perfumaria",
+    "outras_categorias",
+  ];
+
+  useEffect(() => {
+    console.log(activeCategory);
+  }, [activeCategory]);
 
   const handleClick = () => {
     const sendInfo = async () => {
@@ -339,24 +344,20 @@ function Body() {
           console.log(data);
 
           // Obter apenas as categorias selecionadas pelo usuário
-          const selectedCategories = Object.keys(categories).filter(
-            (category) => categories[category]
-          );
+          const selectedCategories = activeCategory;
+
           console.log(selectedCategories);
 
           setDisplayInformation(data);
 
-          const filteredData = selectedCategories.reduce((result, category) => {
-            // Verifica se a categoria existe e se contém itens (pelo menos um item no objeto)
-            console.log(result);
+          const filteredData = () => {
             if (
-              data.hasOwnProperty(category) &&
-              Object.keys(data[category]).length > 0
+              data.hasOwnProperty(activeCategory) &&
+              Object.keys(data[activeCategory]).length > 0
             ) {
-              result[category] = data[category];
+              return data[activeCategory];
             }
-            return result;
-          }, {});
+          };
 
           console.log(filteredData);
           setDisplayInformation(filteredData);
@@ -395,6 +396,7 @@ function Body() {
                       )
                     }
                     text={value}
+                    activeCategory={activeCategory}
                     activeSupermarket={activeSupermarket}
                   ></Option>
                 </>
@@ -405,19 +407,14 @@ function Body() {
           <h2 className="mb-5 text-3xl mt-10 font-semibold">Categorias</h2>
           <div className="flex flex-col text-xl gap-2">
             {/* Passa por todos os itens de dentro de categories para criar um botão para cada uma das opções */}
-            {Object.keys(categories).map((key, index) => {
+            {categories.map((category) => {
               return (
                 <>
                   <Option
-                    text={transformText(key)}
-                    onClick={() => {
-                      setCategories((prevCategories) => ({
-                        ...prevCategories,
-                        [key]: !prevCategories[key], // Altere a chave [key] com base no valor do objeto anterior(prevCategories) porém ! para inverte-lo
-                      }));
-                    }}
-                    isActive={categories[key]} // Mando a atualização do estado para o componente Option(para alteração do estilo)
-                    activeSupermarket={""}
+                    text={transformText(category)}
+                    onClick={() => setActiveCategory(category)}
+                    activeCategory={activeCategory} // Mando a atualização do estado para o componente Option(para alteração do estilo)
+                    activeSupermarket={activeSupermarket}
                   ></Option>
                 </>
               );

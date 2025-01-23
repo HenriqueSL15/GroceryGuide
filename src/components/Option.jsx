@@ -1,22 +1,18 @@
-function Option({ text, onClick, isActive, activeSupermarket }) {
-  console.log(activeSupermarket);
+function Option({ text, onClick, activeCategory, activeSupermarket }) {
   const transformedText = String(text)
     .toLowerCase()
     .replace(/\s+/g, "_")
     .replace(/'/g, "")
     .replace(/á/g, "a");
-  console.log(transformedText);
+
+  const isActive =
+    activeCategory === transformedText || activeSupermarket === transformedText;
+
   return (
     <button
       onClick={onClick}
       className={`font-light hover:font-normal transition-all text-start ${
-        activeSupermarket == ""
-          ? isActive
-            ? "font-normal"
-            : "font-light"
-          : activeSupermarket === transformedText
-          ? "font-normal"
-          : "font-light"
+        isActive ? "font-normal" : "font-light"
       }`}
     >
       {text}

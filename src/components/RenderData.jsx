@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ReactPaginate from "react-paginate";
 
-const RenderData = ({ data, itemsPerPage = 1 }) => {
+const RenderData = ({ data, itemsPerPage = 32 }) => {
   const [currentPage, setCurrentPage] = useState(0); // Estado para armazenar a página atual
   const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar a pesquisa
   const [lowestPrice, setLowestPrice] = useState(true);
 
-  //Verifica se existe data para ser utilizada
+  // Verifica se existe data para ser utilizada
   if (!data || typeof data !== "object") {
     return <div>No data available</div>;
   }
@@ -16,9 +17,14 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
 
   // Filtra categorias e itens com base no nome
   const filterItems = (data) => {
-    // Filtra as categorias e dentro de cada categoria filtra os itens com base no nome
-    let filteredData = Object.keys(data)
-      .map((categoryKey) => {
+    console.log(typeof data);
+
+    for (const categoryKey in data) {
+      console.log(categoryKey);
+    }
+    let filteredData = data
+      .forEach((categoryKey) => {
+        console.log(categoryKey);
         const filteredItems = Object.keys(data[categoryKey]).filter((itemKey) =>
           data[categoryKey][itemKey].title
             .toLowerCase()
@@ -30,7 +36,7 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
           items: filteredItems.map((itemKey) => data[categoryKey][itemKey]),
         };
       })
-      .filter((category) => category.items.length > 0); // Remove categorias que não tem itens filtrados
+      .filter((category) => category.items.length > 0);
 
     if (lowestPrice) {
       filteredData = filteredData.map((category) => ({
@@ -47,24 +53,28 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
     return Number(newString.replace("R$", "").replace(",", "."));
   };
 
-  const totalPages = Math.ceil(filterItems(data).length / itemsPerPage);
+  const totalItems = filterItems(data).reduce(
+    (acc, category) => acc + category.items.length,
+    0
+  );
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // Divide os dados por páginas
-  const paginatedCategories = filterItems(data).slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
+  const paginatedCategories = filterItems(data)
+    .map((category) => {
+      const startIndex = currentPage * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+      return {
+        category: category.category,
+        items: category.items.slice(startIndex, endIndex), // Pega apenas os itens desta página
+      };
+    })
+    .filter((category) => category.items.length > 0); // Remove categorias sem itens
 
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
+  // Callback ao selecionar uma nova página no React Paginate
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
   };
 
   return (
@@ -86,10 +96,11 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
           type="text"
           placeholder="Digite o nome do produto"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Atualiza o valor da pesquisa
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="mb-4 p-2 w-1/2 border border-gray-300 rounded"
         />
       </div>
+
       {/* Exibe produtos filtrados */}
       {paginatedCategories.map((category) => (
         <div key={category.category} className="text-center">
@@ -116,33 +127,32 @@ const RenderData = ({ data, itemsPerPage = 1 }) => {
         </div>
       ))}
 
-      {/* Navegação de páginas */}
-      <div className="flex justify-center items-center mt-4 gap-4">
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 0}
-          className={`px-4 py-2 rounded border border-white hover:bg-white hover:text-black hover:border-black transition-all  ${
+      {/* Paginação com React Paginate */}
+      <div className="mt-4">
+        <ReactPaginate
+          previousLabel={"Anterior"}
+          nextLabel={"Próxima"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageChange}
+          containerClassName={"pagination flex gap-2 justify-center"}
+          activeClassName={"bg-black text-white rounded px-3 py-1"}
+          pageClassName={"border rounded px-3 py-1"}
+          previousClassName={
             currentPage === 0
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-black text-white"
-          }`}
-        >
-          Anterior
-        </button>
-        <span className="font-semibold">
-          Página {currentPage + 1} de {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages - 1}
-          className={`px-4 py-2 rounded border border-white hover:bg-white hover:text-black hover:border-black transition-all  ${
+              ? "text-gray-400 cursor-not-allowed"
+              : "border rounded px-3 py-1"
+          }
+          nextClassName={
             currentPage === totalPages - 1
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-black text-white"
-          }`}
-        >
-          Próxima
-        </button>
+              ? "text-gray-400 cursor-not-allowed"
+              : "border rounded px-3 py-1"
+          }
+          disabledClassName={"opacity-50 cursor-not-allowed"}
+        />
       </div>
     </div>
   );
