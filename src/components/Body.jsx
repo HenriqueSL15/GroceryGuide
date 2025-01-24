@@ -424,7 +424,10 @@ function Body() {
           </div>
         </div>
         <div className="w-3/4 bg-white min-w-3/4">
-          <RenderData data={displayInformation} />
+          <RenderData
+            currentCategory={activeCategory}
+            data={displayInformation}
+          />
         </div>
       </div>
     </div>

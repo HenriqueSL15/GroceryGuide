@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 
-const RenderData = ({ data, itemsPerPage = 32 }) => {
+const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
   const [currentPage, setCurrentPage] = useState(0); // Estado para armazenar a página atual
   const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar a pesquisa
   const [lowestPrice, setLowestPrice] = useState(true);
@@ -18,8 +18,11 @@ const RenderData = ({ data, itemsPerPage = 32 }) => {
 
   // Função para formatar o nome da categoria
   const formatKey = (key) => {
-    console.log(key);
-    key.slice(0, 1).toUpperCase() + key.slice(1).replaceAll("_", " ");
+    if (key !== "Preço indisponível") {
+      return key.slice(0, 1).toUpperCase() + key.slice(1).replaceAll("_", " ");
+    }
+
+    return false;
   };
 
   // Filtra categorias e itens com base no nome
@@ -34,9 +37,11 @@ const RenderData = ({ data, itemsPerPage = 32 }) => {
     }
 
     // Filtra diretamente os objetos no array `data` com base no searchQuery
-    itemsArray = data.filter((values) =>
-      values.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    itemsArray = data
+      .filter((values) => formatKey(values.price) !== false)
+      .filter((values) =>
+        values.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
     // Ordena os itens por preço, caso `lowestPrice` seja verdadeiro
     if (lowestPrice) {
@@ -101,7 +106,7 @@ const RenderData = ({ data, itemsPerPage = 32 }) => {
       {/* Exibe produtos filtrados */}
       <div key={pagination.category} className="text-center">
         <h1 className="font-semibold text-xl border m-5">
-          {formatKey(pagination.category)}
+          {formatKey(currentCategory)}
         </h1>
         <div className="grid grid-cols-4 gap-4">
           {Object.values(pagination.items).map((info, index) => (
