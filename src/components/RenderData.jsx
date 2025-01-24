@@ -11,66 +11,63 @@ const RenderData = ({ data, itemsPerPage = 32 }) => {
     return <div>No data available</div>;
   }
 
-  // Função para formatar o nome da categoria
-  const formatKey = (key) =>
-    key.slice(0, 1).toUpperCase() + key.slice(1).replaceAll("_", " ");
-
-  // Filtra categorias e itens com base no nome
-  const filterItems = (data) => {
-    console.log(typeof data);
-
-    for (const categoryKey in data) {
-      console.log(categoryKey);
-    }
-    let filteredData = data
-      .forEach((categoryKey) => {
-        console.log(categoryKey);
-        const filteredItems = Object.keys(data[categoryKey]).filter((itemKey) =>
-          data[categoryKey][itemKey].title
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-        );
-
-        return {
-          category: categoryKey,
-          items: filteredItems.map((itemKey) => data[categoryKey][itemKey]),
-        };
-      })
-      .filter((category) => category.items.length > 0);
-
-    if (lowestPrice) {
-      filteredData = filteredData.map((category) => ({
-        ...category,
-        items: category.items.sort((a, b) => parsePrice(a) - parsePrice(b)),
-      }));
-    }
-
-    return filteredData;
-  };
-
-  const parsePrice = (priceString) => {
-    const newString = priceString.price;
+  const parsePrice = (item) => {
+    const newString = item.price;
     return Number(newString.replace("R$", "").replace(",", "."));
   };
 
-  const totalItems = filterItems(data).reduce(
-    (acc, category) => acc + category.items.length,
+  // Função para formatar o nome da categoria
+  const formatKey = (key) => {
+    console.log(key);
+    key.slice(0, 1).toUpperCase() + key.slice(1).replaceAll("_", " ");
+  };
+
+  // Filtra categorias e itens com base no nome
+  const filterItems = (data) => {
+    let itemsArray = []; // Inicializa o array que vai armazenar os itens filtrados
+    let category = "gamer"; // Define a categoria (essa pode ser alterada conforme necessário)
+
+    // Verificando se data é um array antes de continuar
+    if (!Array.isArray(data)) {
+      console.error("A estrutura de dados não é um array válido", data);
+      return { category, items: [] }; // Retorna uma estrutura padrão
+    }
+
+    // Filtra diretamente os objetos no array `data` com base no searchQuery
+    itemsArray = data.filter((values) =>
+      values.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Ordena os itens por preço, caso `lowestPrice` seja verdadeiro
+    if (lowestPrice) {
+      itemsArray = itemsArray.sort((a, b) => parsePrice(a) - parsePrice(b));
+    }
+
+    // Retorna a estrutura com a categoria e os itens filtrados
+    return {
+      category: category,
+      items: itemsArray,
+    };
+  };
+
+  const totalItems = Object.values(filterItems(data))[1].reduce(
+    (acc, category) => acc + 1,
     0
   );
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // Divide os dados por páginas
-  const paginatedCategories = filterItems(data)
-    .map((category) => {
-      const startIndex = currentPage * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
+  const paginatedCategories = () => {
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
-      return {
-        category: category.category,
-        items: category.items.slice(startIndex, endIndex), // Pega apenas os itens desta página
-      };
-    })
-    .filter((category) => category.items.length > 0); // Remove categorias sem itens
+    return {
+      category: Object.values(filterItems(data))[0],
+      items: Object.values(filterItems(data))[1].slice(startIndex, endIndex), // Pega apenas os itens desta página
+    };
+  };
+
+  const pagination = paginatedCategories();
 
   // Callback ao selecionar uma nova página no React Paginate
   const handlePageChange = ({ selected }) => {
@@ -102,30 +99,27 @@ const RenderData = ({ data, itemsPerPage = 32 }) => {
       </div>
 
       {/* Exibe produtos filtrados */}
-      {paginatedCategories.map((category) => (
-        <div key={category.category} className="text-center">
-          <div className="w-full border border-black"></div>
-          <h1 className="font-semibold text-xl border m-5">
-            {formatKey(category.category)}
-          </h1>
-          <div className="grid grid-cols-4 gap-4">
-            {category.items.map((item, index) => (
-              <div
-                className="flex flex-col mx-7 my-3 p-3 text-center shadow-xl"
-                key={`${category.category}-${index}`}
-              >
-                <img
-                  className="mb-7"
-                  src={item.image}
-                  alt={item.title || "Product image"}
-                />
-                <h3 className="font-semibold mb-1">{item.title}</h3>
-                <h3 className="font-normal">{item.price}</h3>
-              </div>
-            ))}
-          </div>
+      <div key={pagination.category} className="text-center">
+        <h1 className="font-semibold text-xl border m-5">
+          {formatKey(pagination.category)}
+        </h1>
+        <div className="grid grid-cols-4 gap-4">
+          {Object.values(pagination.items).map((info, index) => (
+            <div
+              className="flex flex-col mx-7 my-3 p-3 text-center shadow-xl"
+              key={`${pagination.category}-${index}`} // Garantindo uma chave única
+            >
+              <img
+                className="mb-7"
+                src={info.image}
+                alt={info.title || "Product image"}
+              />
+              <h3 className="font-semibold mb-1">{info.title}</h3>
+              <h3 className="font-normal">{info.price}</h3>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
 
       {/* Paginação com React Paginate */}
       <div className="mt-4">

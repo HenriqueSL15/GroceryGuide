@@ -282,7 +282,7 @@ function Body() {
   ];
 
   useEffect(() => {
-    console.log(activeCategory);
+    handleClick();
   }, [activeCategory]);
 
   const handleClick = () => {
@@ -341,12 +341,12 @@ function Body() {
         if (response.ok) {
           // Arquivo JSON existe, obter dados filtrados
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
 
           // Obter apenas as categorias selecionadas pelo usuário
           const selectedCategories = activeCategory;
 
-          console.log(selectedCategories);
+          // console.log(selectedCategories);
 
           setDisplayInformation(data);
 
@@ -359,8 +359,8 @@ function Body() {
             }
           };
 
-          console.log(filteredData);
-          setDisplayInformation(filteredData);
+          console.log(filteredData());
+          setDisplayInformation(filteredData());
         } else {
           await sendInfo();
           startScrape();
