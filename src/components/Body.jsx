@@ -5,7 +5,7 @@ import RenderData from "./RenderData.jsx";
 function Body() {
   const websiteDefaultLinks = {
     comper: "https://www.comper.com.br/",
-    olho_d_agua: "https:/www.superolhodagua.instabuy.com.br",
+    olho_d_agua: "https://superolhodagua.instabuy.com.br/",
   };
 
   const links = [
@@ -29,14 +29,12 @@ function Body() {
         perfumaria: "",
         outras_categorias: "",
       },
-      olho_agua: {
+      olho_d_agua: {
         alimentacao_saudavel: "",
         bebidas: {
           alcoolicas: {
             cerveja:
               "https://superolhodagua.instabuy.com.br/sub/Bebidas-Alcoolicas/5d12308d26ce8991c70e4c81",
-            vinho:
-              "https://superolhodagua.instabuy.com.br/sub/Bebidas-Alcoolicas/5d12309226ce8991c70e4c82",
             vodka:
               "https://superolhodagua.instabuy.com.br/sub/Bebidas-Alcoolicas/5d12309b26ce8991c70e4c84",
           },
@@ -258,9 +256,12 @@ function Body() {
       .replaceAll("_", " ");
   };
 
+  const [resetPageIndex, setResetPageIndex] = useState();
+  // let resetPageIndex = false;
+
   const allSupermarkets = ["Comper", "Olho D' Água"];
-  const [activeSupermarket, setActiveMarket] = useState("comper");
-  const [activeCategory, setActiveCategory] = useState("alimentacao_saudavel");
+  const [activeSupermarket, setActiveMarket] = useState("olho_d_agua");
+  const [activeCategory, setActiveCategory] = useState("bebidas");
   const categories = [
     "alimentacao_saudavel",
     "bebidas",
@@ -281,8 +282,17 @@ function Body() {
     "outras_categorias",
   ];
 
+  const handleEvent = () => {
+    setResetPageIndex(true); // Atualiza o estado
+
+    setTimeout(() => {
+      setResetPageIndex(false); // Redefine o estado após 1 segundo
+    }, 1000);
+  };
+
   useEffect(() => {
     handleClick();
+    handleEvent();
   }, [activeCategory]);
 
   const handleClick = () => {
@@ -291,7 +301,7 @@ function Body() {
         const information = [
           websiteDefaultLinks[activeSupermarket],
           links[0][activeSupermarket],
-          categories,
+          activeCategory,
         ];
         console.log("Informação", information);
         const response = await fetch("http://localhost:5000/info", {
@@ -359,7 +369,6 @@ function Body() {
             }
           };
 
-          console.log(filteredData());
           setDisplayInformation(filteredData());
         } else {
           await sendInfo();
@@ -419,12 +428,11 @@ function Body() {
                 </>
               );
             })}
-
-            <Option text={"Pesquisar"} onClick={() => handleClick()}></Option>
           </div>
         </div>
         <div className="w-3/4 bg-white min-w-3/4">
           <RenderData
+            resetToStart={resetPageIndex}
             currentCategory={activeCategory}
             data={displayInformation}
           />

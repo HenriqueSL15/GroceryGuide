@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
+const RenderData = ({
+  resetToStart,
+  data,
+  currentCategory,
+  itemsPerPage = 32,
+}) => {
   const [currentPage, setCurrentPage] = useState(0); // Estado para armazenar a página atual
   const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar a pesquisa
   const [lowestPrice, setLowestPrice] = useState(true);
+
+  useEffect(() => {
+    if (resetToStart) {
+      setCurrentPage(0);
+    }
+  }, [resetToStart]);
 
   // Verifica se existe data para ser utilizada
   if (!data || typeof data !== "object") {
@@ -15,6 +26,8 @@ const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
     const newString = item.price;
     return Number(newString.replace("R$", "").replace(",", "."));
   };
+
+  // console.log(resetToStart);
 
   // Função para formatar o nome da categoria
   const formatKey = (key) => {
@@ -111,7 +124,7 @@ const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
         <div className="grid grid-cols-4 gap-4">
           {Object.values(pagination.items).map((info, index) => (
             <div
-              className="flex flex-col mx-7 my-3 p-3 text-center shadow-xl"
+              className="flex flex-col mx-7 my-3 p-3 text-center shadow-xl justify-between font-funnel"
               key={`${pagination.category}-${index}`} // Garantindo uma chave única
             >
               <img
@@ -119,6 +132,7 @@ const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
                 src={info.image}
                 alt={info.title || "Product image"}
               />
+
               <h3 className="font-semibold mb-1">{info.title}</h3>
               <h3 className="font-normal">{info.price}</h3>
             </div>
@@ -138,19 +152,22 @@ const RenderData = ({ data, currentCategory, itemsPerPage = 32 }) => {
           pageRangeDisplayed={3}
           onPageChange={handlePageChange}
           containerClassName={"pagination flex gap-2 justify-center"}
-          activeClassName={"bg-black text-white rounded px-3 py-1"}
-          pageClassName={"border rounded px-3 py-1"}
+          activeClassName={"bg-black text-white rounded px-3 py-1 "}
+          pageClassName={
+            "border rounded px-3 py-1 hover:bg-black hover:text-white transition-all"
+          }
           previousClassName={
             currentPage === 0
               ? "text-gray-400 cursor-not-allowed"
-              : "border rounded px-3 py-1"
+              : "border rounded px-3 py-1 hover:bg-black hover:text-white transition-all"
           }
           nextClassName={
             currentPage === totalPages - 1
               ? "text-gray-400 cursor-not-allowed"
-              : "border rounded px-3 py-1"
+              : "border rounded px-3 py-1 hover:bg-black hover:text-white transition-all"
           }
           disabledClassName={"opacity-50 cursor-not-allowed"}
+          forcePage={currentPage}
         />
       </div>
     </div>
