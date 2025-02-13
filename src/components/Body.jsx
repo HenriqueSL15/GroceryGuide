@@ -35,8 +35,6 @@ function Body() {
           alcoolicas: {
             cerveja:
               "https://superolhodagua.instabuy.com.br/sub/Bebidas-Alcoolicas/5d12308d26ce8991c70e4c81",
-            vodka:
-              "https://superolhodagua.instabuy.com.br/sub/Bebidas-Alcoolicas/5d12309b26ce8991c70e4c84",
           },
           nao_alcoolicas: {
             cha: "https://superolhodagua.instabuy.com.br/sub/Bebidas-Nao-Alcoolicas/5d1230aaaba19edbf30e41d6",
@@ -53,6 +51,19 @@ function Body() {
             agua: "https://superolhodagua.instabuy.com.br/sub/Bebidas-Nao-Alcoolicas/5d1230d0aba19edbf30e41e7",
           },
         },
+        casa_e_lazer: {
+          cozinha:
+            "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f7d26ce8991c70e4c58",
+          inseticidas:
+            "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f83aba19edbf30e41ca",
+          lar: "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f88aba19edbf30e41cb",
+          talheres_e_loucas:
+            "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f8f26ce8991c70e4c70",
+          lampadas_e_velas:
+            "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f9626ce8991c70e4c71",
+          toalhas:
+            "https://superolhodagua.instabuy.com.br/sub/Artigos-para-o-Lar/5d122f9b748e182f890e3c4b",
+        },
         carnes: {
           aves: "https://superolhodagua.instabuy.com.br/sub/Acougue-Aves-Peixaria/5d12301126ce8991c70e4c78",
           aves_naturais:
@@ -68,10 +79,7 @@ function Body() {
           suinos:
             "https://superolhodagua.instabuy.com.br/sub/Acougue-Aves-Peixaria/5d12307e26ce8991c70e4c80",
         },
-        casa_e_lazer:
-          "https://superolhodagua.instabuy.com.br/cat/Artigos-para-o-Lar",
         congelados: {
-          gelo: "https://superolhodagua.instabuy.com.br/sub/Congelados/5d12317626ce8991c70e4d8b",
           lanches:
             "https://superolhodagua.instabuy.com.br/sub/Congelados/5d12317f26ce8991c70e4d8d",
           sorvetes:
@@ -79,9 +87,7 @@ function Body() {
         },
         frios: {
           derivados_de_queijo:
-            "https://superolhodagua.instabuy.com.br/sub/Frios-e-Laticinios/5d1231caaba19edbf30e4222s",
-          frios_e_embutidos:
-            "https://superolhodagua.instabuy.com.br/sub/Frios-e-Laticinios/5d1231d126ce8991c70e4d91",
+            "https://superolhodagua.instabuy.com.br/sub/Frios-e-Laticinios/5d1231caaba19edbf30e4222",
           iogurtes:
             "https://superolhodagua.instabuy.com.br/sub/Frios-e-Laticinios/5d1231de26ce8991c70e4d93",
           manteigas:
@@ -119,8 +125,6 @@ function Body() {
             "https://superolhodagua.instabuy.com.br/sub/Limpeza/5d12326826ce8991c70e4da0",
           limpador_multiuso:
             "https://superolhodagua.instabuy.com.br/sub/Limpeza/5d13a80a6d3a1503efc605a1",
-          sabao_liquido:
-            "https://superolhodagua.instabuy.com.br/sub/Limpeza/5d12325826ce8991c70e4d9d",
           sabao_em_barra:
             "https://superolhodagua.instabuy.com.br/sub/Limpeza/5d5dace2c91cfb8331860ab2",
           sabao_em_pasta:
@@ -132,60 +136,48 @@ function Body() {
         },
         matinais: "",
         mercearia: {
-          alimentos_basicos: {
-            arroz:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f3b26ce8991c70e4c51",
-            enlatados:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f48aba19edbf30e41c9",
-            farinhas:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f4d26ce8991c70e4c52",
-            feijao:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f53748e182f890e3c49",
-            granel:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f5926ce8991c70e4c55",
-            massas:
-              "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f6826ce8991c70e4c56",
-          },
-          mercearia: {
-            achocolatado:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327326ce8991c70e4da2",
-            azeites_oleos:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327a26ce8991c70e4da3",
-            acucar:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327fa69308e14f0e3e03",
-            cafes:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12328726ce8991c70e4da6",
-            cereais:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12328daba19edbf30e4228",
-            leite:
-              "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12329526ce8991c70e4da7",
-          },
-          condimentos_e_molhos: {
-            derivados_tomate:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12312ba69308e14f0e3df7",
-            fermentos_essencias:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d123130a69308e14f0e3dfa",
-            maionese:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12313826ce8991c70e4d87",
-            molhos:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12313d26ce8991c70e4d88",
-            sopas:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d123145aba19edbf30e421e",
-            temperos_naturais:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12316426ce8991c70e4d8a",
-            temperos_prontos:
-              "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12314aaba19edbf30e421f",
-          },
-          biscoitos_aperitivos: {
-            biscoitos:
-              "https://superolhodagua.instabuy.com.br/sub/Biscoitos-e-Aperitivos/5d1230e326ce8991c70e4d00",
-            salgadinhos:
-              "https://superolhodagua.instabuy.com.br/sub/Biscoitos-e-Aperitivos/5d1230e826ce8991c70e4d12",
-            torradas:
-              "https://superolhodagua.instabuy.com.br/sub/Biscoitos-e-Aperitivos/5d1230ef26ce8991c70e4d1a",
-          },
+          arroz:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f3b26ce8991c70e4c51",
+          enlatados:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f48aba19edbf30e41c9",
+          farinhas:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f4d26ce8991c70e4c52",
+          feijao:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f53748e182f890e3c49",
+          granel:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f5926ce8991c70e4c55",
+          massas:
+            "https://superolhodagua.instabuy.com.br/sub/Alimentos-Basicos/5d122f6826ce8991c70e4c56",
+          achocolatado:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327326ce8991c70e4da2",
+          azeites_oleos:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327a26ce8991c70e4da3",
+          acucar:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12327fa69308e14f0e3e03",
+          cafes:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12328726ce8991c70e4da6",
+          cereais:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12328daba19edbf30e4228",
+          leite:
+            "https://superolhodagua.instabuy.com.br/sub/Mercearia/5d12329526ce8991c70e4da7",
+          derivados_tomate:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12312ba69308e14f0e3df7",
+          fermentos_essencias:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d123130a69308e14f0e3dfa",
+          maionese:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12313826ce8991c70e4d87",
+          molhos:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12313d26ce8991c70e4d88",
+          temperos_naturais:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12316426ce8991c70e4d8a",
+          temperos_prontos:
+            "https://superolhodagua.instabuy.com.br/sub/Condimentos-e-Molhos/5d12314aaba19edbf30e421f",
+          biscoitos:
+            "https://superolhodagua.instabuy.com.br/sub/Biscoitos-e-Aperitivos/5d1230e326ce8991c70e4d00",
+          salgadinhos:
+            "https://superolhodagua.instabuy.com.br/sub/Biscoitos-e-Aperitivos/5d1230e826ce8991c70e4d12",
         },
-        pedaria: {
+        padaria: {
           paes_industrializados:
             "https://superolhodagua.instabuy.com.br/sub/Padaria-e-Lanchonete/5d1232e926ce8991c70e4dac",
         },
@@ -261,7 +253,7 @@ function Body() {
 
   const allSupermarkets = ["Comper", "Olho D' Água"];
   const [activeSupermarket, setActiveMarket] = useState("olho_d_agua");
-  const [activeCategory, setActiveCategory] = useState("bebidas");
+  const [activeCategory, setActiveCategory] = useState("carnes");
   const categories = [
     "alimentacao_saudavel",
     "bebidas",
@@ -293,7 +285,7 @@ function Body() {
   useEffect(() => {
     handleClick();
     handleEvent();
-  }, [activeCategory]);
+  }, [activeCategory, activeSupermarket]);
 
   const handleClick = () => {
     const sendInfo = async () => {
@@ -351,7 +343,7 @@ function Body() {
         if (response.ok) {
           // Arquivo JSON existe, obter dados filtrados
           const data = await response.json();
-          // console.log(data);
+          console.log(data);
 
           // Obter apenas as categorias selecionadas pelo usuário
           const selectedCategories = activeCategory;
@@ -362,10 +354,10 @@ function Body() {
 
           const filteredData = () => {
             if (
-              data.hasOwnProperty(activeCategory) &&
-              Object.keys(data[activeCategory]).length > 0
+              data[activeSupermarket].hasOwnProperty(activeCategory) &&
+              Object.keys(data[activeSupermarket][activeCategory]).length > 0
             ) {
-              return data[activeCategory];
+              return data[activeSupermarket][activeCategory];
             }
           };
 
