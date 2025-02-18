@@ -13,7 +13,7 @@ const RenderData = ({
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   function handleText(text) {
-    let words = text.split(" ");
+    let words = text.split("_");
     for (let i = 0; i < words.length; i++) {
       if (words[i].length <= 1) {
         continue;
