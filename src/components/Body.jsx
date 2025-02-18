@@ -370,10 +370,11 @@ function Body() {
           };
 
           setDisplayInformation(filteredData());
-        } else {
-          await sendInfo();
-          startScrape();
         }
+        // } else {
+        //   // await sendInfo();
+        //   // startScrape();
+        // }
       } catch (error) {
         console.error("Erro ao buscar os dados:", error);
       }

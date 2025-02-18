@@ -12,6 +12,31 @@ const RenderData = ({
   const [lowestPrice, setLowestPrice] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  function handleText(text) {
+    let words = text.split(" ");
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].length <= 1) {
+        continue;
+      }
+      console.log(words[i]);
+      if (words[i] == "Alimentacao") {
+        words[i] = "Alimentação";
+        continue;
+      }
+
+      if (words[i] == "saudavel") {
+        words[i] = "Saudável";
+        continue;
+      }
+
+      const first = words[i].slice(0, 1).toUpperCase();
+      const last = words[i].slice(1);
+      words[i] = first + last;
+    }
+
+    return words.join(" ");
+  }
+
   // Monitorar tamanho da tela
   useEffect(() => {
     const handleResize = () => {
@@ -148,7 +173,7 @@ const RenderData = ({
       {/* Exibe produtos filtrados */}
       <div key={pagination.category} className="text-center">
         <h1 className="font-semibold text-xl border m-5">
-          {formatKey(currentCategory)}
+          {handleText(currentCategory)}
         </h1>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
           {Object.values(pagination.items).map((info, index) => (
