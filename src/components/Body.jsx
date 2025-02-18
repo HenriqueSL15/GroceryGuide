@@ -288,59 +288,59 @@ function Body() {
   }, [activeCategory, activeSupermarket]);
 
   const handleClick = () => {
-    const sendInfo = async () => {
-      try {
-        const information = [
-          websiteDefaultLinks[activeSupermarket],
-          links[0][activeSupermarket],
-          activeCategory,
-        ];
-        console.log("Informação", information);
-        const response = await fetch(
-          "https://grocery-guide-backend.vercel.app/info",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(information),
-          }
-        );
+    // const sendInfo = async () => {
+    //   try {
+    //     const information = [
+    //       websiteDefaultLinks[activeSupermarket],
+    //       links[0][activeSupermarket],
+    //       activeCategory,
+    //     ];
+    //     console.log("Informação", information);
+    //     const response = await fetch(
+    //       "https://grocery-guide-backend.vercel.app/info",
+    //       {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(information),
+    //       }
+    //     );
 
-        //Verifica se a resposta foi bem-sucedida
-        if (!response.ok) {
-          throw new Error("Erro no envio de informações");
-        }
-        const data = await response.json();
-      } catch (error) {
-        console.error("Erro ao enviar as informações:", error);
-      }
-    };
+    //     //Verifica se a resposta foi bem-sucedida
+    //     if (!response.ok) {
+    //       throw new Error("Erro no envio de informações");
+    //     }
+    //     const data = await response.json();
+    //   } catch (error) {
+    //     console.error("Erro ao enviar as informações:", error);
+    //   }
+    // };
 
-    const startScrape = async () => {
-      try {
-        const response = await fetch(
-          "https://grocery-guide-backend.vercel.app/start-scraping",
-          {
-            method: "POST",
-          }
-        );
+    // const startScrape = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://grocery-guide-backend.vercel.app/start-scraping",
+    //       {
+    //         method: "POST",
+    //       }
+    //     );
 
-        //Verifica se a resposta foi bem-sucedida
-        if (!response.ok) {
-          throw new Error("Erro no envio de informações");
-        }
-        const data = await response.json();
+    //     //Verifica se a resposta foi bem-sucedida
+    //     if (!response.ok) {
+    //       throw new Error("Erro no envio de informações");
+    //     }
+    //     const data = await response.json();
 
-        if (data.ok) {
-          console.log("Scraping iniciado e concluído com sucesso.");
-        } else {
-          console.error("Erro ao iniciar o scraping.");
-        }
-      } catch (error) {
-        console.error("Erro ao enviar as informações:", error);
-      }
-    };
+    //     if (data.ok) {
+    //       console.log("Scraping iniciado e concluído com sucesso.");
+    //     } else {
+    //       console.error("Erro ao iniciar o scraping.");
+    //     }
+    //   } catch (error) {
+    //     console.error("Erro ao enviar as informações:", error);
+    //   }
+    // };
     const fetchData = async () => {
       try {
         const response = await fetch(
