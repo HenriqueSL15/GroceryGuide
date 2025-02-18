@@ -4,6 +4,7 @@ Esse projeto foi feito com o intuito de facilitar na busca e pesquisa de preços
 
 ## 📸 Demonstração
 *No momento existem 2 supermercados pois não são todos os supermercados que possuem sites com seus produtos (scrape foi utilizado na hora de obter as informações)*
+
 Acesse uma demonstração ao vivo [aqui](https://silly-puppy-ee877a.netlify.app/)
 
 ## 🚀 Tecnologias Utilizadas
