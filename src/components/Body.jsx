@@ -296,13 +296,16 @@ function Body() {
           activeCategory,
         ];
         console.log("Informação", information);
-        const response = await fetch("http://localhost:5000/info", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(information),
-        });
+        const response = await fetch(
+          "https://grocery-guide-backend.vercel.app/info",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(information),
+          }
+        );
 
         //Verifica se a resposta foi bem-sucedida
         if (!response.ok) {
@@ -316,9 +319,12 @@ function Body() {
 
     const startScrape = async () => {
       try {
-        const response = await fetch("http://localhost:5000/start-scraping", {
-          method: "POST",
-        });
+        const response = await fetch(
+          "https://grocery-guide-backend.vercel.app/start-scraping",
+          {
+            method: "POST",
+          }
+        );
 
         //Verifica se a resposta foi bem-sucedida
         if (!response.ok) {
@@ -337,13 +343,14 @@ function Body() {
     };
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/data");
+        const response = await fetch(
+          "https://grocery-guide-backend.vercel.app/data"
+        );
 
         // Verifique se a resposta é bem-sucedida
         if (response.ok) {
           // Arquivo JSON existe, obter dados filtrados
           const data = await response.json();
-          console.log(data);
 
           // Obter apenas as categorias selecionadas pelo usuário
           const selectedCategories = activeCategory;
@@ -367,7 +374,11 @@ function Body() {
           startScrape();
         }
       } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
+        console.error("Erro na requisição:", {
+          url: "https://grocery-guide-backend.vercel.app/data",
+          status: error.response?.status,
+          message: error.message,
+        });
       }
     };
     try {
