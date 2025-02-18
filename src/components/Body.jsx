@@ -378,11 +378,11 @@ function Body() {
   };
 
   return (
-    <div className="bg-white w-full h-full">
+    <div id="body" className="bg-white w-full h-full sm:mx-3">
       <div className="flex">
-        <div className="w-1/4 border-r-2 border-gray-400 rounded bg-white min-w-1/4 text-start p-3 min-h-96">
-          <h2 className="mb-5 text-3xl font-semibold">Supermercado</h2>
+        <div className="w-1/4 lg:border-r-2  border-gray-400 rounded bg-white min-w-1/4 text-start mr-14 min-h-96">
           <div className="flex flex-col text-xl justify-start items-start gap-2">
+            <h2 className="mb-5 text-3xl font-semibold">Supermercado</h2>
             {allSupermarkets.map((value) => {
               return (
                 <>
@@ -405,8 +405,8 @@ function Body() {
             })}
           </div>
 
-          <h2 className="mb-5 text-3xl mt-10 font-semibold">Categorias</h2>
           <div className="flex flex-col text-xl gap-2">
+            <h2 className="mb-5 text-3xl mt-10 font-semibold">Categoria</h2>
             {/* Passa por todos os itens de dentro de categories para criar um botão para cada uma das opções */}
             {categories.map((category) => {
               return (
@@ -422,7 +422,7 @@ function Body() {
             })}
           </div>
         </div>
-        <div className="w-3/4 bg-white min-w-3/4">
+        <div className="w-3/4 bg-white min-w-3/4 lg:border-none sm:border-l-2">
           <RenderData
             resetToStart={resetPageIndex}
             currentCategory={activeCategory}

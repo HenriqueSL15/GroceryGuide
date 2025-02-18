@@ -15,11 +15,14 @@ function Supermarkets() {
   ];
 
   return (
-    <div className="border-2 border-black rounded-lg object-cover p-10 my-40">
+    <div
+      id="supermarkets"
+      className="border-2 border-black rounded-lg object-cover sm:mx-10 p-10 my-40"
+    >
       <h1 className="px-5 font-funnel font-bold text-4xl mb-5">
-        Supermercados
+        Supermercados Disponíveis
       </h1>
-      <div className="grid grid-cols-2">
+      <div className="grid lg:grid-cols-2">
         {supermarkets.map((supermarket, index) => {
           return <IndividualSupermarket supermarket={supermarket} />;
         })}

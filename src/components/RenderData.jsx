@@ -10,6 +10,17 @@ const RenderData = ({
   const [currentPage, setCurrentPage] = useState(0); // Estado para armazenar a página atual
   const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar a pesquisa
   const [lowestPrice, setLowestPrice] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Monitorar tamanho da tela
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (resetToStart) {
@@ -19,7 +30,11 @@ const RenderData = ({
 
   // Verifica se existe data para ser utilizada
   if (!data || typeof data !== "object") {
-    return <div>No data available</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <h1>Não existem informações dessa categoria nesse supermercado</h1>
+      </div>
+    );
   }
 
   const parsePrice = (item) => {
@@ -72,16 +87,30 @@ const RenderData = ({
     (acc, category) => acc + 1,
     0
   );
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Divide os dados por páginas
+  // Calcular items por página dinamicamente
+  // const itemsPerPageDynamic = windowWidth <= 640 ? 8 : 32;
+  const itemsPerPageDynamic = () => {
+    if (windowWidth <= 640) {
+      return 8;
+    } else if (windowWidth <= 1024) {
+      return 16;
+    } else {
+      return 32;
+    }
+  };
+
+  // Atualizar cálculo de páginas
+  const totalPages = Math.ceil(totalItems / itemsPerPageDynamic());
+
+  // Atualizar a função de paginação
   const paginatedCategories = () => {
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = currentPage * itemsPerPageDynamic();
+    const endIndex = startIndex + itemsPerPageDynamic();
 
     return {
       category: Object.values(filterItems(data))[0],
-      items: Object.values(filterItems(data))[1].slice(startIndex, endIndex), // Pega apenas os itens desta página
+      items: Object.values(filterItems(data))[1].slice(startIndex, endIndex),
     };
   };
 
@@ -121,7 +150,7 @@ const RenderData = ({
         <h1 className="font-semibold text-xl border m-5">
           {formatKey(currentCategory)}
         </h1>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
           {Object.values(pagination.items).map((info, index) => (
             <div
               className="flex flex-col mx-7 my-3 p-3 text-center shadow-xl justify-between font-funnel"
