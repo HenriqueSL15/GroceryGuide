@@ -345,7 +345,15 @@ function Body() {
       try {
         const response = await fetch(
           "https://grocery-guide-backend.vercel.app/data"
-        );
+        )
+          .then((response) => {
+            console.log("Status:", response.status);
+            return response.json();
+          })
+          .then((data) => console.log("Dados:", data))
+          .catch((error) => {
+            console.error("Erro ao obter dados:", error);
+          });
 
         // Verifique se a resposta é bem-sucedida
         if (response.ok) {
